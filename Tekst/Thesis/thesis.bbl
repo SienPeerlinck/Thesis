@@ -1,0 +1,427 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{noauthor_ccsdsorg_nodate-1}{online}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{{CCSDS}.org - About {CCSDS}}
+      \field{titleaddon}{About {CCSDS}}
+      \field{urlday}{14}
+      \field{urlmonth}{11}
+      \field{urlyear}{2023}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb CCSDS.org - About CCSDS:C\:\\Users\\sienp\\Zotero\\storage\\9JBNAB9C\\default.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://public.ccsds.org/about/default.aspx
+      \endverb
+      \verb{url}
+      \verb https://public.ccsds.org/about/default.aspx
+      \endverb
+    \endentry
+    \entry{ccsds_secretariat_lossless_2020}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=d84de1a59fcdc8a815b08c61639778b6}{%
+           family={Secretariat},
+           familyi={S\bibinitperiod},
+           given={{CCSDS}},
+           giveni={C\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Washington, {DC}, {USA}}%
+      }
+      \strng{namehash}{d84de1a59fcdc8a815b08c61639778b6}
+      \strng{fullhash}{d84de1a59fcdc8a815b08c61639778b6}
+      \strng{bibnamehash}{d84de1a59fcdc8a815b08c61639778b6}
+      \strng{authorbibnamehash}{d84de1a59fcdc8a815b08c61639778b6}
+      \strng{authornamehash}{d84de1a59fcdc8a815b08c61639778b6}
+      \strng{authorfullhash}{d84de1a59fcdc8a815b08c61639778b6}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{number}{121.0}
+      \field{pagetotal}{45}
+      \field{title}{Lossless Data Compression}
+      \field{version}{B2}
+      \field{year}{2020}
+      \field{dateera}{ce}
+      \verb{file}
+      \verb 2020 - Lossless Data Compression.pdf:C\:\\Users\\sienp\\Zotero\\storage\\9YZDELZI\\2020 - Lossless Data Compression.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://public.ccsds.org/Pubs/121x0b3.pdf
+      \endverb
+      \verb{url}
+      \verb https://public.ccsds.org/Pubs/121x0b3.pdf
+      \endverb
+    \endentry
+    \entry{ccsds_secreteriat_image_2017}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=eb6d0abe14204b685b725f99558ded4b}{%
+           family={Secreteriat},
+           familyi={S\bibinitperiod},
+           given={{CCSDS}},
+           giveni={C\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Washington, {DC}, {USA}}%
+      }
+      \strng{namehash}{eb6d0abe14204b685b725f99558ded4b}
+      \strng{fullhash}{eb6d0abe14204b685b725f99558ded4b}
+      \strng{bibnamehash}{eb6d0abe14204b685b725f99558ded4b}
+      \strng{authorbibnamehash}{eb6d0abe14204b685b725f99558ded4b}
+      \strng{authornamehash}{eb6d0abe14204b685b725f99558ded4b}
+      \strng{authorfullhash}{eb6d0abe14204b685b725f99558ded4b}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{number}{122.0}
+      \field{pagetotal}{65}
+      \field{title}{Image Data Compression}
+      \field{version}{B3}
+      \field{year}{2017}
+      \field{dateera}{ce}
+      \verb{file}
+      \verb 2017 - Image Data Compression.pdf:C\:\\Users\\sienp\\Zotero\\storage\\CEIAW6GR\\2017 - Image Data Compression.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://public.ccsds.org/Pubs/122x0b2.pdf
+      \endverb
+      \verb{url}
+      \verb https://public.ccsds.org/Pubs/122x0b2.pdf
+      \endverb
+    \endentry
+    \entry{portell_fapec_2018}{article}{}
+      \name{author}{5}{}{%
+        {{hash=83b71f5956aa1314752789327fdd99f4}{%
+           family={Portell},
+           familyi={P\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+        {{hash=9f03aa7c25642240aa2804c595166f13}{%
+           family={Iudica},
+           familyi={I\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod}}}%
+        {{hash=9bcad01341ac24ace26304581c1a2568}{%
+           family={García-Berro},
+           familyi={G\bibinithyphendelim B\bibinitperiod},
+           given={E.},
+           giveni={E\bibinitperiod}}}%
+        {{hash=ae54c4285a6cbd1195d5f87055470ad8}{%
+           family={Villafranca},
+           familyi={V\bibinitperiod},
+           given={A.\bibnamedelimi G.},
+           giveni={A\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+        {{hash=b0b3379c3aa68f700011fa0485c9af38}{%
+           family={Artigues},
+           familyi={A\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{f0f6652b706b6d7e80433c7837fa2fa2}
+      \strng{fullhash}{f0f6652b706b6d7e80433c7837fa2fa2}
+      \strng{bibnamehash}{f0f6652b706b6d7e80433c7837fa2fa2}
+      \strng{authorbibnamehash}{f0f6652b706b6d7e80433c7837fa2fa2}
+      \strng{authornamehash}{f0f6652b706b6d7e80433c7837fa2fa2}
+      \strng{authorfullhash}{f0f6652b706b6d7e80433c7837fa2fa2}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Fully Adaptive Prediction Error Coder ({FAPEC}) is a data compressor which offers good compression ratios even when data is severely affected by noise and outliers. This, combined with its high computing performance, makes it suitable for space applications. It is based on a variety of pre-processing stages followed by an outlier-resilient adaptive entropy coder. Sample sizes of 8–24 bits are supported. Pre-processing stages range from simple delta algorithms (with interleaving, lossy, and filtering options) to more complex discrete wavelet transform and Hierarchical Pixel Averaging image algorithms (with or without losses, for single or multiple bands). A quick prediction-based lossless multi-band algorithm is also available, as well as lightweight dictionary-like pattern recognition. Thus, one can have functionalities equivalent to those of Consultative Committee for Space Data Systems ({CCSDS}) 121.0, 122.x, and 123.x in a single system, as well as some features not supported yet by any recommendation. Here, we describe the main features of {FAPEC} and the results obtained on a variety of data, comparing compression ratios and speeds against {CCSDS} standards.}
+      \field{day}{3}
+      \field{issn}{0143-1161}
+      \field{journaltitle}{International Journal of Remote Sensing}
+      \field{month}{4}
+      \field{note}{Publisher: Taylor \& Francis \_eprint: https://doi.org/10.1080/01431161.2017.1399478}
+      \field{number}{7}
+      \field{title}{{FAPEC}, a versatile and efficient data compressor for space missions}
+      \field{urlday}{1}
+      \field{urlmonth}{11}
+      \field{urlyear}{2023}
+      \field{volume}{39}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{2022\bibrangedash 2042}
+      \range{pages}{21}
+      \verb{doi}
+      \verb 10.1080/01431161.2017.1399478
+      \endverb
+      \verb{file}
+      \verb Full Text PDF:C\:\\Users\\sienp\\Zotero\\storage\\Q92RRFKT\\Portell et al. - 2018 - FAPEC, a versatile and efficient data compressor f.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1080/01431161.2017.1399478
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1080/01431161.2017.1399478
+      \endverb
+    \endentry
+    \entry{villafranca_fapec_2011}{inproceedings}{}
+      \name{author}{4}{}{%
+        {{hash=fc8c5fbbc37949cd62608dc641523146}{%
+           family={Villafranca},
+           familyi={V\bibinitperiod},
+           given={Alberto\bibnamedelima G.},
+           giveni={A\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+        {{hash=b9cb00448474e17da0eef6ed0bffebe3}{%
+           family={Mignot},
+           familyi={M\bibinitperiod},
+           given={Shan},
+           giveni={S\bibinitperiod}}}%
+        {{hash=95d7d4e899adef1e330747233a07c626}{%
+           family={Portell},
+           familyi={P\bibinitperiod},
+           given={Jordi},
+           giveni={J\bibinitperiod}}}%
+        {{hash=6bddb6d7d9eb27c4e7781a3ecd894406}{%
+           family={García-Berro},
+           familyi={G\bibinithyphendelim B\bibinitperiod},
+           given={Enrique},
+           giveni={E\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {SPIE}%
+      }
+      \strng{namehash}{ecde616f42c16def05cc2e6929404ddf}
+      \strng{fullhash}{ecde616f42c16def05cc2e6929404ddf}
+      \strng{bibnamehash}{ecde616f42c16def05cc2e6929404ddf}
+      \strng{authorbibnamehash}{ecde616f42c16def05cc2e6929404ddf}
+      \strng{authornamehash}{ecde616f42c16def05cc2e6929404ddf}
+      \strng{authorfullhash}{ecde616f42c16def05cc2e6929404ddf}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Future space missions are based on a new generation of instruments. These missions find a serious constraint in the telemetry system, which cannot download to ground the large volume of data generated. Hence, data compression algorithms are often mandatory in space, despite the modest processing power usually available on-board. We present here a compact solution implemented in hardware for such missions. {FAPEC} is a lossless compressor which typically can outperform the {CCSDS} 121.0 recommendation on realistic data sets. With efficiencies higher than 90\% of the Shannon limit in most cases - even in presence of noise or outliers - {FAPEC} has been successfully validated in its software version as a robust low-complexity alternative to the recommendation. This work describes the {FAPEC} implementation on an {FPGA}, targeting the space-qualified Actel {RTAX} family. We prove that {FAPEC} is hardwarefriendly and that it does not require external memory. We also assess the correct operation of the prototype for an initial throughput of 32 Mbits/s with very low power consumption (about 20 {mW}). Finally, we discuss further potential applications of {FAPEC}, and we set the basis for the improvements that will boost {FAPEC} performance beyond the 100 Mbit/s level.}
+      \field{booktitle}{Satellite Data Compression, Communications, and Processing {VII}}
+      \field{day}{16}
+      \field{eventtitle}{Satellite Data Compression, Communications, and Processing {VII}}
+      \field{month}{9}
+      \field{shorttitle}{{FAPEC} in an {FPGA}}
+      \field{title}{{FAPEC} in an {FPGA}: a simple low-power solution for data compression in space}
+      \field{urlday}{10}
+      \field{urlmonth}{11}
+      \field{urlyear}{2023}
+      \field{volume}{8157}
+      \field{year}{2011}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{137\bibrangedash 145}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1117/12.895138
+      \endverb
+      \verb{urlraw}
+      \verb https://www.spiedigitallibrary.org/conference-proceedings-of-spie/8157/81570I/FAPEC-in-an-FPGA--a-simple-low-power-solution/10.1117/12.895138.full
+      \endverb
+      \verb{url}
+      \verb https://www.spiedigitallibrary.org/conference-proceedings-of-spie/8157/81570I/FAPEC-in-an-FPGA--a-simple-low-power-solution/10.1117/12.895138.full
+      \endverb
+    \endentry
+    \entry{villafranca_prediction_2013}{article}{}
+      \name{author}{3}{}{%
+        {{hash=fc8c5fbbc37949cd62608dc641523146}{%
+           family={Villafranca},
+           familyi={V\bibinitperiod},
+           given={Alberto\bibnamedelima G.},
+           giveni={A\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+        {{hash=95d7d4e899adef1e330747233a07c626}{%
+           family={Portell},
+           familyi={P\bibinitperiod},
+           given={Jordi},
+           giveni={J\bibinitperiod}}}%
+        {{hash=6bddb6d7d9eb27c4e7781a3ecd894406}{%
+           family={García-Berro},
+           familyi={G\bibinithyphendelim B\bibinitperiod},
+           given={Enrique},
+           giveni={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{37809318df64e0d3bde671d68e61543b}
+      \strng{fullhash}{37809318df64e0d3bde671d68e61543b}
+      \strng{bibnamehash}{37809318df64e0d3bde671d68e61543b}
+      \strng{authorbibnamehash}{37809318df64e0d3bde671d68e61543b}
+      \strng{authornamehash}{37809318df64e0d3bde671d68e61543b}
+      \strng{authorfullhash}{37809318df64e0d3bde671d68e61543b}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Lossless compression is often required for downloading data of scientific payloads in space missions. The consultative committee for space data systems ({CCSDS}) 121.0 recommendation on lossless data compression is a “de-facto” standard, and it has been used in several missions so far owing to the reasonable compression ratios achieved with low processing requirements. Although the Rice coder used by this standard is optimal when dealing with noiseless Laplacian-distributed data, its performance rapidly degrades when noisy data are compressed or when there is a significant fraction of outliers in the input data. An alternative to this is {PEC}, the Prediction Error Coder, which is the core of the {FAPEC} adaptive entropy coder. We describe, analyze and test {PEC} on real and simulated data, revealing its key role in the excellent outlier resiliency of {FAPEC}. {PEC} is a fast and noise-resilient semi-adaptive entropy coder that can achieve better performances than the {CCSDS} standard in the presence of noise or when the input data contains a sizable fraction of outliers, while requiring very low processing resources.}
+      \field{issn}{1931-3195, 1931-3195}
+      \field{journaltitle}{Journal of Applied Remote Sensing}
+      \field{month}{8}
+      \field{note}{Publisher: {SPIE}}
+      \field{number}{1}
+      \field{shortjournal}{{JARS}}
+      \field{shorttitle}{Prediction Error Coder}
+      \field{title}{Prediction Error Coder: a fast lossless compression method for satellite noisy data}
+      \field{urlday}{11}
+      \field{urlmonth}{11}
+      \field{urlyear}{2023}
+      \field{volume}{7}
+      \field{year}{2013}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{074593}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1117/1.JRS.7.074593
+      \endverb
+      \verb{urlraw}
+      \verb https://www.spiedigitallibrary.org/journals/journal-of-applied-remote-sensing/volume-7/issue-1/074593/Prediction-Error-Coder--a-fast-lossless-compression-method-for/10.1117/1.JRS.7.074593.full
+      \endverb
+      \verb{url}
+      \verb https://www.spiedigitallibrary.org/journals/journal-of-applied-remote-sensing/volume-7/issue-1/074593/Prediction-Error-Coder--a-fast-lossless-compression-method-for/10.1117/1.JRS.7.074593.full
+      \endverb
+    \endentry
+    \entry{howard_fast_1993}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{hash=986de7cf186e5ce29874deaa3c761c5a}{%
+           family={Howard},
+           familyi={H\bibinitperiod},
+           given={P.G.},
+           giveni={P\bibinitperiod}}}%
+        {{hash=add89cec1bf136a031009199a6602415}{%
+           family={Vitter},
+           familyi={V\bibinitperiod},
+           given={J.S.},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{661acce25001848d45816690156b41c5}
+      \strng{fullhash}{661acce25001848d45816690156b41c5}
+      \strng{bibnamehash}{661acce25001848d45816690156b41c5}
+      \strng{authorbibnamehash}{661acce25001848d45816690156b41c5}
+      \strng{authornamehash}{661acce25001848d45816690156b41c5}
+      \strng{authorfullhash}{661acce25001848d45816690156b41c5}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{A new method gives compression comparable with the {JPEG} lossless mode, with about five times the speed. {FELICS} is based on a novel use of two neighboring pixels for both prediction and error modeling. For coding, the authors use single bits, adjusted binary codes, and Golomb or Rice codes. For the latter they present and analyze a provably good method for estimating the single coding parameter.{<}{>}}
+      \field{booktitle}{[Proceedings] {DCC} `93: Data Compression Conference}
+      \field{eventtitle}{[Proceedings] {DCC} `93: Data Compression Conference}
+      \field{month}{3}
+      \field{title}{Fast and efficient lossless image compression}
+      \field{urlday}{1}
+      \field{urlmonth}{11}
+      \field{urlyear}{2023}
+      \field{year}{1993}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{351\bibrangedash 360}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1109/DCC.1993.253114
+      \endverb
+      \verb{file}
+      \verb IEEE Xplore Abstract Record:C\:\\Users\\sienp\\Zotero\\storage\\DRHW6CDB\\253114.html:text/html;IEEE Xplore Full Text PDF:C\:\\Users\\sienp\\Zotero\\storage\\5Y7B6GMZ\\Howard and Vitter - 1993 - Fast and efficient lossless image compression.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://ieeexplore.ieee.org/document/253114
+      \endverb
+      \verb{url}
+      \verb https://ieeexplore.ieee.org/document/253114
+      \endverb
+    \endentry
+    \entry{salomon_image_2010}{incollection}{}
+      \name{author}{2}{}{%
+        {{hash=ebc74a2ebd9e08d90a51be1e7d3b5647}{%
+           family={Salomon},
+           familyi={S\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=a91a65080e7706ad29fea17f1b11f480}{%
+           family={Motta},
+           familyi={M\bibinitperiod},
+           given={Giovanni},
+           giveni={G\bibinitperiod}}}%
+      }
+      \name{editor}{2}{}{%
+        {{hash=ebc74a2ebd9e08d90a51be1e7d3b5647}{%
+           family={Salomon},
+           familyi={S\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=a91a65080e7706ad29fea17f1b11f480}{%
+           family={Motta},
+           familyi={M\bibinitperiod},
+           given={Giovanni},
+           giveni={G\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {London}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{f505fb37ecbbc4d8ab836c80a7237509}
+      \strng{fullhash}{f505fb37ecbbc4d8ab836c80a7237509}
+      \strng{bibnamehash}{f505fb37ecbbc4d8ab836c80a7237509}
+      \strng{authorbibnamehash}{f505fb37ecbbc4d8ab836c80a7237509}
+      \strng{authornamehash}{f505fb37ecbbc4d8ab836c80a7237509}
+      \strng{authorfullhash}{f505fb37ecbbc4d8ab836c80a7237509}
+      \strng{editorbibnamehash}{f505fb37ecbbc4d8ab836c80a7237509}
+      \strng{editornamehash}{f505fb37ecbbc4d8ab836c80a7237509}
+      \strng{editorfullhash}{f505fb37ecbbc4d8ab836c80a7237509}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The first part of this chapter discusses the basic features and types of digital images and the main approaches to image compression. This is followed by a description of about 30 different compression methods.}
+      \field{booktitle}{Handbook of Data Compression}
+      \field{isbn}{978-1-84882-903-9}
+      \field{langid}{english}
+      \field{title}{Image Compression}
+      \field{urlday}{1}
+      \field{urlmonth}{11}
+      \field{urlyear}{2023}
+      \field{year}{2010}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{443\bibrangedash 730}
+      \range{pages}{288}
+      \verb{doi}
+      \verb 10.1007/978-1-84882-903-9_7
+      \endverb
+      \verb{file}
+      \verb Full Text PDF:C\:\\Users\\sienp\\Zotero\\storage\\SE3NGMAK\\Salomon and Motta - 2010 - Image Compression.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1007/978-1-84882-903-9_7
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1007/978-1-84882-903-9_7
+      \endverb
+      \keyw{Compression Method,Discrete Cosine Transform,Image Block,Image Compression,Iterate Function System}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
