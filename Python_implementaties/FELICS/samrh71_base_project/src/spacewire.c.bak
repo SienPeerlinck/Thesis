@@ -1,0 +1,460 @@
+#include "sam.h"
+#include "spacewire.h"
+
+// FreeRTOS includes
+#include "FreeRTOS.h"
+#include "queue.h"
+
+#include "opt/printf-stdarg.h"
+
+#define NOCACHE __attribute__((section(".flexram_nocache"), aligned(32)))
+
+// Buffers
+#define N_BUF 2
+#define N_TXBUF 2
+#define NO_BUF N_BUF + N_TXBUF
+#define N_SEND_DESC 2
+
+enum tx_obj_state_t
+{
+    FREE_ST = 0,
+    BUSY_ST,
+};
+
+static enum tx_obj_state_t tx_buf_state[N_TXBUF];
+static enum tx_obj_state_t tx_hdr_state[N_TXBUF];
+static enum tx_obj_state_t send_desc_state[N_SEND_DESC];
+
+NOCACHE static char bufs[N_BUF][BIG_BUF_SIZE];
+NOCACHE static char tx_bufs[N_TXBUF][SMALL_BUF_SIZE];
+NOCACHE static char tx_headers[N_TXBUF][TX_HEADER_SIZE];
+NOCACHE static rcv_desc_t rcv_desc_list[N_BUF];
+NOCACHE static send_desc_t send_desc_list[N_SEND_DESC];
+
+static QueueHandle_t spw_rx_queue;
+static QueueHandle_t spw_tx_queue;
+
+static unsigned int spw_error = 0;
+static unsigned int int_cntr = 0;
+
+enum spw_irq_t
+{
+    NO_IRQ = 0,
+    RX_ACT_IRQ,
+    RX_DEACT_IRQ,
+    TX_ACT_IRQ,
+    TX_DEACT_IRQ,
+    UNKNOWN_IRQ
+};
+static enum spw_irq_t irqs[64];
+
+void spw_init(void)
+{
+    // !!! from Datasheet ----------------------------------------------------
+    // 36.5.2 Power Management
+    // The SpW is clocked through the Power Management Controller (PMC),thus the programmer must first configure the
+    // PMC to enable the SpW clock and the timetick clock if required.
+    // On transmission, the SpaceWire bitrate is defined from the GCLK clock frequency (see the Speed Link section for
+    // more details). The GLCK frequency must be less than or equal to twice the MCK clock frequency; that is, GCLK ≤
+    // 2*MCK
+    // On reception, the SpaceWire bitrate is linked to the MCK clock frequency. The bit rate must be less than or equal to
+    // four times MCK; that is, RX_SpaceWire_bitrate ≤ 4*MCK.
+    //------------------------------------------------------------------------
+
+    // Enable Peripheral Clock for SpaceWire (id=65), GCLK source = PLLA_CLK / (GCLKDIV + 1)
+    //                                                            = 100 MHz  / 1 = 100 MHz
+    PMC_REGS->PMC_PCR = PMC_PCR_EN(1) | PMC_PCR_GCLKCSS_PLLA_CLK | PMC_PCR_GCLKDIV(0) | PMC_PCR_CMD(1) | PMC_PCR_PID(65);
+    // Enable GCLK for SpaceWire (id=65)
+    PMC_REGS->PMC_PCR = PMC_PCR_EN(1) | PMC_PCR_GCLKCSS_PLLA_CLK | PMC_PCR_GCLKDIV(0) | PMC_PCR_CMD(1) | PMC_PCR_PID(65) | PMC_PCR_GCLKEN(1);
+    // PMC_REGS->PMC_PCR = PMC_PCR_EN(1) | PMC_PCR_GCLKEN(1) | PMC_PCR_GCLKCSS_MCK_CLK | PMC_PCR_CMD(1) | PMC_PCR_PID(65);
+
+    // The initial transmitter signalling bitrate is SpWInitbitrate = SpwClk / (0.5 x (TxInitDiv + 1))
+    // The operating transmitter signalling bitrate is SpWOperbitrate = SpwClk / (0.5 x (TxOperDiv + 1))
+    // SpWCLK = 100MHz,  TxInitDiv = 19 => SpWInitbitrate = 10 Mbits/s
+    // SpWCLK = 100MHz,  TxOperDiv = 0  => SpWOperbitrate = 200 Mbits/s
+    SPW_REGS->SPW_LINK1_CLKDIV = SPW_LINK1_CLKDIV_TXINITDIV(19) | SPW_LINK1_CLKDIV_TXOPERDIV(0);
+    SPW_REGS->SPW_LINK2_CLKDIV = SPW_LINK2_CLKDIV_TXINITDIV(19) | SPW_LINK2_CLKDIV_TXOPERDIV(0);
+
+    SPW_REGS->SPW_LINK1_CFG = SPW_LINK1_CFG_COMMAND_LINK_START;
+
+    spw_rx_queue = xQueueCreate(N_BUF, sizeof(rcv_desc_t *));
+    spw_tx_queue = xQueueCreate(N_SEND_DESC, sizeof(send_desc_t *));
+}
+
+inline unsigned int spw_link1_status(void)
+{
+    return SPW_REGS->SPW_LINK1_STATUS;
+}
+
+inline unsigned int spw_link2_status(void)
+{
+    return SPW_REGS->SPW_LINK2_STATUS;
+}
+
+inline unsigned int spw_router_status(void)
+{
+    return SPW_REGS->SPW_ROUTER_STS;
+}
+
+inline unsigned int spw_tx1_status(void)
+{
+    return SPW_REGS->SPW_PKTTX1_STATUS;
+}
+
+inline unsigned int spw_rx1_status(void)
+{
+    return SPW_REGS->SPW_PKTRX1_STATUS;
+}
+
+inline unsigned int spw_rx1_prev_buf_status(void)
+{
+    return SPW_REGS->SPW_PKTRX1_PREVBUFSTS;
+}
+
+inline static void next_rcv(rcv_desc_t *rcv_desc)
+{
+    if (rcv_desc == &rcv_desc_list[0])
+        SPW_REGS->SPW_PKTRX1_NXTBUFDATAADDR = bufs[0];
+    else if (rcv_desc == &rcv_desc_list[1])
+        SPW_REGS->SPW_PKTRX1_NXTBUFDATAADDR = bufs[1];
+    else
+        return -1;
+
+    SPW_REGS->SPW_PKTRX1_NXTBUFDATALEN = BIG_BUF_SIZE;
+
+    SPW_REGS->SPW_PKTRX1_NXTBUFPKTADDR = rcv_desc;
+    SPW_REGS->SPW_PKTRX1_NXTBUFCFG = SPW_PKTRX1_NXTBUFCFG_MAXCNT(1);
+    SPW_REGS->SPW_PKTRX1_NXTBUFCFG = SPW_PKTRX1_NXTBUFCFG_MAXCNT(1) | SPW_PKTRX1_NXTBUFCFG_START_STARTLATER;
+    return 0;
+}
+
+inline static void reset_transmitter(void)
+{
+    SPW_REGS->SPW_PKTTX1_SWRESET = 0x4D616A6F;
+    SPW_REGS->SPW_PKTTX1_SWRESET = 0x72546F6D;
+}
+
+static void init_transmitter(void)
+{
+    reset_transmitter();
+    memset(send_desc_list, 0, N_SEND_DESC * sizeof(send_desc_t));
+}
+
+inline static void reset_receiver(void)
+{
+    SPW_REGS->SPW_PKTRX1_SWRESET = 0x4D616A6F;
+    SPW_REGS->SPW_PKTRX1_SWRESET = 0x72546F6D;
+    // printf("SPW_PKTRX1 Soft Reset !");
+}
+
+static void init_receiver(void)
+{
+    reset_receiver();
+}
+
+static void init_interrupts(void)
+{
+    NVIC_SetPriority(SPW_IRQn, 5);
+    NVIC_EnableIRQ(SPW_IRQn);
+
+    SPW_REGS->SPW_PKTRX1_PI_C = 0x1f;
+    SPW_REGS->SPW_PKTTX1_PI_C = 0x0f;
+
+    SPW_REGS->SPW_PKTRX1_IM = SPW_PKTRX1_IM_ACT(1) | SPW_PKTRX1_IM_DEACT(1);
+    SPW_REGS->SPW_PKTTX1_IM = SPW_PKTTX1_IM_ACT(1) | SPW_PKTTX1_IM_DEACT(1);
+}
+
+void spw_start(void)
+{
+    init_receiver();
+    init_transmitter();
+    init_interrupts();
+    next_rcv(&rcv_desc_list[0]);
+    next_rcv(&rcv_desc_list[1]);
+}
+
+rcv_desc_t *find_rcv_desc(char *buf)
+{
+    rcv_desc_t *rcv_desc;
+
+    for (int i = 0; i < N_BUF; i++)
+    {
+        rcv_desc = &rcv_desc_list[i];
+        if (buf == rcv_desc->str.daddr)
+        {
+            return rcv_desc;
+        }
+    }
+    return 0;
+}
+
+char spw_get_tx_buf(char **tx_buf)
+{
+    char r = -1;
+    NVIC_DisableIRQ(SPW_IRQn);
+    for (int i = 0; i < N_TXBUF; i++)
+    {
+        if (tx_buf_state[i] == FREE_ST)
+        {
+            tx_buf_state[i] = BUSY_ST;
+            *tx_buf = &tx_bufs[i];
+            r = 0;
+            break;
+        }
+    }
+    NVIC_EnableIRQ(SPW_IRQn);
+    return r;
+}
+
+char spw_release_tx_buf(char *tx_buf)
+{
+    char r = -1;
+    NVIC_DisableIRQ(SPW_IRQn);
+    for (int i = 0; i < N_SEND_DESC; i++)
+    {
+        if (&tx_bufs[i] == tx_buf)
+        {
+            tx_buf_state[i] = FREE_ST;
+            r = 0;
+            break;
+        }
+    }
+    NVIC_EnableIRQ(SPW_IRQn);
+    return r;
+}
+
+char spw_get_tx_header(char **tx_hdr)
+{
+    char r = -1;
+    NVIC_DisableIRQ(SPW_IRQn);
+    for (int i = 0; i < N_TXBUF; i++)
+    {
+        if (tx_hdr_state[i] == FREE_ST)
+        {
+            tx_hdr_state[i] = BUSY_ST;
+            *tx_hdr = &tx_headers[i];
+            r = 0;
+            break;
+        }
+    }
+    NVIC_EnableIRQ(SPW_IRQn);
+    return r;
+}
+
+char spw_release_tx_header(char *tx_hdr)
+{
+    char r = -1;
+    NVIC_DisableIRQ(SPW_IRQn);
+    for (int i = 0; i < N_SEND_DESC; i++)
+    {
+        if (&tx_headers[i] == tx_hdr)
+        {
+            tx_hdr_state[i] = FREE_ST;
+            r = 0;
+            break;
+        }
+    }
+    NVIC_EnableIRQ(SPW_IRQn);
+    return r;
+}
+
+char spw_get_send_desc(send_desc_t **send_desc)
+{
+    char r = -1;
+    NVIC_DisableIRQ(SPW_IRQn);
+    for (int i = 0; i < N_SEND_DESC; i++)
+    {
+        if (send_desc_state[i] == FREE_ST)
+        {
+            send_desc_state[i] = BUSY_ST;
+            *send_desc = &send_desc_list[i];
+            r = 0;
+            break;
+        }
+    }
+    NVIC_EnableIRQ(SPW_IRQn);
+    return r;
+}
+
+char spw_release_send_desc(send_desc_t *send_desc)
+{
+    char r = -1;
+    NVIC_DisableIRQ(SPW_IRQn);
+    for (int i = 0; i < N_SEND_DESC; i++)
+    {
+        if (&send_desc_list[i] == send_desc)
+        {
+            send_desc_state[i] = FREE_ST;
+            r = 0;
+            break;
+        }
+    }
+    NVIC_EnableIRQ(SPW_IRQn);
+    return r;
+}
+
+char spw_send(send_desc_t *send_desc)
+{
+    char r = -1;
+    NVIC_DisableIRQ(SPW_IRQn);
+    SPW_REGS->SPW_PKTTX1_NXTSENDADDR = send_desc;
+    SPW_REGS->SPW_PKTTX1_NXTSENDCFG = SPW_PKTTX1_NXTSENDCFG_LEN(1) | SPW_PKTTX1_NXTSENDCFG_START_STARTNOW;
+    r = 0;
+    NVIC_EnableIRQ(SPW_IRQn);
+    return r;
+}
+
+char spw_wait_send_done(send_desc_t **send_desc, TickType_t timeout)
+{
+    if (xQueueReceive(spw_tx_queue, send_desc, timeout))
+    {
+        return 0;
+    }
+    else
+        return -1;
+}
+
+char spw_receive(rcv_desc_t **rcv_desc, TickType_t timeout)
+{
+    if (xQueueReceive(spw_rx_queue, rcv_desc, timeout))
+    {
+        return 0;
+    }
+    else
+        return -1;
+}
+
+char spw_release_rcv_desc(rcv_desc_t *rcv_desc)
+{
+    char r = 0;
+    NVIC_DisableIRQ(SPW_IRQn);
+    // Unlock Previous receive buffer
+    if (SPW_REGS->SPW_PKTRX1_PREVBUFSTS & SPW_PKTRX1_PREVBUFSTS_LOCKED_Msk == 0) {
+        spw_error |= RX_UNLOCK_ERROR;
+        char r = -1;
+    }
+    next_rcv(rcv_desc);
+    NVIC_EnableIRQ(SPW_IRQn);
+    return r;
+}
+
+static rcv_desc_t *last_act_rcv_desc;
+
+static void rx_act_handler(void)
+{
+    last_act_rcv_desc = SPW_REGS->SPW_PKTRX1_CURBUFPKTADDR;
+
+    // Clear pending interrupt
+    SPW_REGS->SPW_PKTRX1_PI_C = SPW_PKTRX1_PI_C_ACT(1);
+}
+
+static void rx_deact_handler(void)
+{
+    if (xQueueSendToBackFromISR(spw_rx_queue, &last_act_rcv_desc, NULL) == errQUEUE_FULL)
+        spw_error |= RX_Q_FULL_ERROR;
+
+    // Clear pending interrupt
+    SPW_REGS->SPW_PKTRX1_PI_C = SPW_PKTRX1_PI_C_DEACT(1);
+}
+
+static void tx_act_handler(void)
+{
+    // Clear pending interrupt
+    SPW_REGS->SPW_PKTTX1_PI_C = SPW_PKTTX1_PI_C_ACT(1);
+}
+
+static void tx_deact_handler(void)
+{
+    unsigned int tx_status;
+    send_desc_t *send_desc;
+
+    tx_status = SPW_REGS->SPW_PKTTX1_STATUS;
+    if (tx_status & SPW_PKTTX1_STATUS_PREV_Msk != SPW_PKTTX1_STATUS_PREV_LASTSENDLISTOK)
+        spw_error |= TX_PREV_ERROR;
+
+    send_desc = SPW_REGS->SPW_PKTTX1_CURSENDADDR;
+    if (xQueueSendToBackFromISR(spw_tx_queue, &send_desc, NULL) == errQUEUE_FULL)
+        spw_error |= TX_Q_FULL_ERROR;
+
+    // Unlock the send list
+    SPW_REGS->SPW_PKTTX1_STATUS = 0;
+
+    // Clear pending interrupt
+    SPW_REGS->SPW_PKTTX1_PI_C = SPW_PKTTX1_PI_C_DEACT(1);
+}
+
+void SPW_Handler(void)
+{
+    unsigned int pending_int_reg;
+
+    pending_int_reg = SPW_REGS->SPW_PKTRX1_PI_RM;
+    if (pending_int_reg & SPW_PKTRX1_PI_RM_DEACT_Msk)
+    {
+        // irqs[int_cntr] = RX_DEACT_IRQ;
+        int_cntr++;
+        rx_deact_handler();
+    }
+    if (pending_int_reg & SPW_PKTRX1_PI_RM_ACT_Msk)
+    {
+        // irqs[int_cntr] = RX_ACT_IRQ;
+        int_cntr++;
+        rx_act_handler();
+    }
+
+    pending_int_reg = SPW_REGS->SPW_PKTTX1_PI_RM;
+    if (pending_int_reg & SPW_PKTTX1_PI_RM_ACT_Msk)
+    {
+        // irqs[int_cntr] = TX_ACT_IRQ;
+        int_cntr++;
+        tx_act_handler();
+    }
+    if (pending_int_reg & SPW_PKTTX1_PI_RM_DEACT_Msk)
+    {
+        // irqs[int_cntr] = TX_DEACT_IRQ;
+        int_cntr++;
+        tx_deact_handler();
+    }
+}
+
+void print_spw_status(void)
+{
+    printf("spw_router_status       %08x\n", spw_router_status());
+    printf("spw_link1_status        %08x\n", spw_link1_status());
+    printf("spw_link2_status        %08x\n", spw_link2_status());
+    printf("spw_rx1_status          %08x\n", spw_rx1_status());
+    printf("spw_rx1_prev_buf_status %08x\n", spw_rx1_prev_buf_status());
+    printf("spw_tx1_status          %08x\n", spw_tx1_status());
+
+    printf("Interrupt cntr: %d\n", int_cntr);
+    printf("Error reg     : %d\n", spw_error);
+
+    /*
+    for (int i = 0; i < N_BUF; i++)
+    {
+        printf("\nBuffer %d\n", i);
+        printf("  bufs     : %08x\n", bufs[i]);
+        printf("  pkt_rcv_list: %08x\n", &rcv_desc_list[i]);
+        for (int j = 0; j < 4; j++)
+            printf("    %d: %08x\n", j, rcv_desc_list[i].words[j]);
+    }
+
+    printf("\nIRQS : ");
+    for (int i = 0; i < 64; i++)
+    {
+        if (irqs[i] == NO_IRQ)
+            break;
+        printf(" %d", irqs[i]);
+    }
+    printf("\n");
+
+    printf("last_act_rcv_desc %08x\n", last_act_rcv_desc);
+
+    printf("\n");
+    printf("SPW_PKTRX1_NXTBUFPKTADDR  = %08x\n", SPW_REGS->SPW_PKTRX1_NXTBUFPKTADDR);
+    printf("SPW_PKTRX1_NXTBUFDATAADDR = %08x\n", SPW_REGS->SPW_PKTRX1_NXTBUFDATAADDR);
+    printf("SPW_PKTRX1_NXTBUFDATALEN  = %06x\n", SPW_REGS->SPW_PKTRX1_NXTBUFDATALEN);
+    printf("SPW_PKTRX1_CURBUFPKTADDR  = %08x\n", SPW_REGS->SPW_PKTRX1_CURBUFPKTADDR);
+    printf("SPW_PKTRX1_CURBUFDATAADDR = %08x\n", SPW_REGS->SPW_PKTRX1_CURBUFDATAADDR);
+    printf("SPW_PKTRX1_CURBUFDATALEN  = %06x\n", SPW_REGS->SPW_PKTRX1_CURBUFDATALEN);
+    */
+}

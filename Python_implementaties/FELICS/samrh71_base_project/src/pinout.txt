@@ -1,0 +1,15 @@
+
+
+PA2      11  FLEXCOM2_IO0    TXD      Out  Console
+PA6      15  FLEXCOM2_IO1    RXD      In   Console
+PA13     22  WDT             NWDT0    Out  Watchdog
+PA19     29  FLEXCOM3_IO1    MISO     Out  FPGA
+PA20     30  FLEXCOM3_IO0    MOSI     In   FPGA
+PA23     35  FLEXCOM3_IO2    SPCK     In   FPGA
+PA24     36  FLEXCOM3_IO3    NSS      In   FPGA
+PB19     88  PIO1                     Out  LED_0
+PB23     92  PIO1                     Out  LED_1
+PF19    241  PIO5                     Out  LED_2
+PF20    242  PIO5                     Out  LED_3
+PF29      3  FLEXCOM1_IO1    RXD      In   TC/TM
+PF30      4  FLEXCOM1_IO0    TXD      Out  TC/TM

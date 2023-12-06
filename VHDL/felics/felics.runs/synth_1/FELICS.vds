@@ -1,0 +1,39 @@
+#-----------------------------------------------------------
+# Vivado v2021.1 (64-bit)
+# SW Build 3247384 on Thu Jun 10 19:36:33 MDT 2021
+# IP Build 3246043 on Fri Jun 11 00:30:35 MDT 2021
+# Start of session at: Wed Dec  6 21:25:17 2023
+# Process ID: 27288
+# Current directory: C:/Users/sienp/Documents/school/IIW4/Thesis/VHDL/felics/felics.runs/synth_1
+# Command line: vivado.exe -log FELICS.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source FELICS.tcl
+# Log file: C:/Users/sienp/Documents/school/IIW4/Thesis/VHDL/felics/felics.runs/synth_1/FELICS.vds
+# Journal file: C:/Users/sienp/Documents/school/IIW4/Thesis/VHDL/felics/felics.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source FELICS.tcl -notrace
+Command: synth_design -top FELICS -part xc7s100fgga676-2
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7s100'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7s100'
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 19720
+---------------------------------------------------------------------------------
+Starting Synthesize : Time (s): cpu = 00:00:01 ; elapsed = 00:00:05 . Memory (MB): peak = 1135.043 ; gain = 0.000
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'FELICS' [C:/Users/sienp/Documents/school/IIW4/Thesis/VHDL/felics/felics.srcs/sources_1/new/felics.vhd:49]
+	Parameter BITS_PER_PIXEL bound to: 20 - type: integer 
+INFO: [Synth 8-3491] module 'ABC' declared at 'C:/Users/sienp/Documents/school/IIW4/Thesis/VHDL/felics/felics.srcs/sources_1/new/ABC.vhd:34' bound to instance 'ab_code' of component 'ABC' [C:/Users/sienp/Documents/school/IIW4/Thesis/VHDL/felics/felics.srcs/sources_1/new/felics.vhd:101]
+INFO: [Synth 8-638] synthesizing module 'ABC' [C:/Users/sienp/Documents/school/IIW4/Thesis/VHDL/felics/felics.srcs/sources_1/new/ABC.vhd:47]
+	Parameter BITS_PER_PIXEL bound to: 20 - type: integer 
+ERROR: [Synth 8-690] width mismatch in assignment; target has 19 bits, source has 20 bits [C:/Users/sienp/Documents/school/IIW4/Thesis/VHDL/felics/felics.srcs/sources_1/new/ABC.vhd:61]
+ERROR: [Synth 8-285] failed synthesizing module 'ABC' [C:/Users/sienp/Documents/school/IIW4/Thesis/VHDL/felics/felics.srcs/sources_1/new/ABC.vhd:47]
+ERROR: [Synth 8-285] failed synthesizing module 'FELICS' [C:/Users/sienp/Documents/school/IIW4/Thesis/VHDL/felics/felics.srcs/sources_1/new/felics.vhd:49]
+---------------------------------------------------------------------------------
+Finished Synthesize : Time (s): cpu = 00:00:01 ; elapsed = 00:00:06 . Memory (MB): peak = 1135.043 ; gain = 0.000
+---------------------------------------------------------------------------------
+synthesize failed
+INFO: [Common 17-83] Releasing license: Synthesis
+8 Infos, 0 Warnings, 0 Critical Warnings and 4 Errors encountered.
+synth_design failed
+ERROR: [Common 17-69] Command failed: Vivado Synthesis failed
+INFO: [Common 17-206] Exiting Vivado at Wed Dec  6 21:25:28 2023...

@@ -1,0 +1,68 @@
+Background level benchmark ---------------------------------
+Background =   50000:  73728 ->  44497    True  (1.657)
+Background =  100000:  73728 ->  44498    True  (1.657)
+Background =  150000:  73728 ->  44498    True  (1.657)
+Background =  200000:  73728 ->  44498    True  (1.657)
+Background =  250000:  73728 ->  44498    True  (1.657)
+Background =  300000:  73728 ->  44498    True  (1.657)
+Background =  350000:  73728 ->  44498    True  (1.657)
+Background =  400000:  73728 ->  44498    True  (1.657)
+Background =  450000:  73728 ->  44498    True  (1.657)
+Background =  500000:  73728 ->  44498    True  (1.657)
+Background =  550000:  73728 ->  44498    True  (1.657)
+Background =  600000:  73728 ->  44498    True  (1.657)
+Background =  650000:  73728 ->  44498    True  (1.657)
+Background =  700000:  73728 ->  44498    True  (1.657)
+Background =  750000:  73728 ->  44498    True  (1.657)
+Background =  800000:  73728 ->  44498    True  (1.657)
+Background =  850000:  73728 ->  44498    True  (1.657)
+Background =  900000:  73728 ->  44498    True  (1.657)
+Background =  950000:  73728 ->  44498    True  (1.657)
+------------------------------------------------------------
+
+Amplitude benchmark ----------------------------------------
+Amplitude =   10384:  73728 ->  42002    True  (1.755)
+Amplitude =   26768:  73728 ->  42815    True  (1.722)
+Amplitude =   59536:  73728 ->  43613    True  (1.691)
+Amplitude =  125072:  73728 ->  44902    True  (1.642)
+Amplitude =  256144:  73728 ->  46807    True  (1.575)
+Amplitude =  518288:  73728 ->  49263    True  (1.497)
+Amplitude = 1042576:  73728 ->  51870    True  (1.421)
+Amplitude = 2091152:  73728 ->  54714    True  (1.348)
+Amplitude = 4188304:  73728 ->  57612    True  (1.280)
+Amplitude = 8382608:  73728 ->  60511    True  (1.218)
+------------------------------------------------------------
+
+Bits per pixel benchmark -----------------------------------
+Bits = 12:  73728 ->  27769    True  (2.655)
+Bits = 14:  73728 ->  28093    True  (2.624)
+Bits = 16:  73728 ->  30360    True  (2.428)
+Bits = 18:  73728 ->  36063    True  (2.044)
+Bits = 20:  73728 ->  42228    True  (1.746)
+Bits = 22:  73728 ->  48381    True  (1.524)
+Bits = 24:  73728 ->  54526    True  (1.352)
+------------------------------------------------------------
+
+Compare with other format  --------------------------------
+png: 49152 -> 45828
+jpeg2000: 49152 -> 44639
+tiff lzma: 49152 -> 46422
+felics: 49152 -> 43569
+------------------------------------------------------------
+
+Delta min benchmark -----------------------------------
+0
+Traceback (most recent call last):
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\Python_implementaties\FELICS\py_felics\run.py", line 3, in <module>
+    run()
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\Python_implementaties\FELICS\py_felics\py_felics\__init__.py", line 12, in run
+    benchmark.run(args)
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\Python_implementaties\FELICS\py_felics\py_felics\benchmark.py", line 201, in run
+    benchmark_delta_min()
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\Python_implementaties\FELICS\py_felics\py_felics\benchmark.py", line 136, in benchmark_delta_min
+    im2 = Felics.decode(buf)
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\Python_implementaties\FELICS\py_felics\py_felics\felics.py", line 30, in decode
+    return cls(*args, **kw).__decode(byte_arr)
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\Python_implementaties\FELICS\py_felics\py_felics\felics.py", line 171, in __decode
+    im[y, x] = p
+OverflowError: Python int too large to convert to C long
