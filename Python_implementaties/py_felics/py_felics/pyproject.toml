@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "py_felics"
+version = "0.1.0"
+description = "'Fast and Efficient Lossless Image Compression' in python."
+authors = ["Roland Clairquin <roland.clairquin@aeronomie.be>"]
+license = "GNU General Public License v3"
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+numpy = ">=1.22"
+matplotlib = ">=3.5"
+Pillow = ">=9.1"
+pyserial = ">=3.5"
+
+[tool.poetry.dev-dependencies]
+pytest = ">=6.2"
+
+[tool.poetry.scripts]
+py_felics = "py_felics:run"
+
+[build-system]
+requires = ["setuptools", "poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

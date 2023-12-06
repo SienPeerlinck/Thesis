@@ -1,0 +1,19 @@
+running py_felics
+__init__.py
+Background level benchmark ---------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\Python_implementaties\py_fapec\FAPEC\py_fapec\__init__.py", line 18, in <module>
+    run()
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\Python_implementaties\py_fapec\FAPEC\py_fapec\__init__.py", line 14, in run
+    benchmark.run(args)
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\Python_implementaties\py_fapec\FAPEC\py_fapec\benchmark.py", line 197, in run
+    benchmark_bkg_level()  
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\Python_implementaties\py_fapec\FAPEC\py_fapec\benchmark.py", line 25, in benchmark_bkg_level
+    buf = Fapec.encode(im)
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\Python_implementaties\py_fapec\FAPEC\py_fapec\fapec.py", line 25, in encode
+    return cls(*args, **kw).__encode(im)
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\Python_implementaties\py_fapec\FAPEC\py_fapec\fapec.py", line 58, in __encode
+    hf_code.push(int(n))
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\Python_implementaties\py_fapec\FAPEC\py_fapec\huffman_code.py", line 77, in push
+    encodedOutput = self.OutputEncoded(x, huffmanEncoding)  
+AttributeError: 'HuffmanCode' object has no attribute 'OutputEncoded'

@@ -1,0 +1,7 @@
+ [1m[ERROR][m[License] License file not found
+running py_felics
+__init__.py
+running benchmark
+Background level benchmark ---------------------------------
+Background = bkg: raw_size -> encoded size    lossless?
+FAPEC error

@@ -1,0 +1,15 @@
+running py_felics
+__init__.py
+Started with 384x64 image
+Traceback (most recent call last):
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\py_felics\py_felics\py_felics\__init__.py", line 20, in <module>
+    run()
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\py_felics\py_felics\py_felics\__init__.py", line 16, in run
+    cortex.run(args)
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\py_felics\py_felics\py_felics\cortex.py", line 137, in run
+    ex1(args)
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\py_felics\py_felics\py_felics\cortex.py", line 118, in ex1
+    sam71 = Cortex()
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\py_felics\py_felics\py_felics\cortex.py", line 25, in __init__
+    raise RuntimeError("Serial-USB %s not found." % SAM71_SN)
+RuntimeError: Serial-USB ATML2407131800002413 not found.

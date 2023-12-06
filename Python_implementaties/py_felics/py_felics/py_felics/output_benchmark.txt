@@ -1,0 +1,24 @@
+running py_felics
+__init__.py
+running benchmark
+Background level benchmark ---------------------------------
+Background = bkg: raw_size -> encoded size    lossless?
+77
+Traceback (most recent call last):
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\py_felics\py_felics\py_felics\__init__.py", line 20, in <module>
+    run()
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\py_felics\py_felics\py_felics\__init__.py", line 14, in run
+    benchmark.run(args)
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\py_felics\py_felics\py_felics\benchmark.py", line 252, in run
+    bench_bkg_level()   # No effect on compressed ratio
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\py_felics\py_felics\py_felics\benchmark.py", line 28, in bench_bkg_level
+    buf = Felics.encode(im, 20, ctx)  
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\py_felics\py_felics\py_felics\felics.py", line 26, in encode
+    return cls(*args, **kw).__encode(im, *args)
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\py_felics\py_felics\py_felics\felics.py", line 102, in __encode
+    se_code.push(e, delta)
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\py_felics\py_felics\py_felics\subexponential_code.py", line 47, in push
+    self.__context.update(x, delta, k)
+  File "C:\Users\sienp\Documents\school\IIW4\Thesis\py_felics\py_felics\py_felics\context.py", line 19, in update
+    cnt = subexponential_code.count_bits(int(x), k)
+AttributeError: module 'subexponential_code' has no attribute 'count_bits'

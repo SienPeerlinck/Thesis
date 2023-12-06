@@ -1,0 +1,81 @@
+running py_felics
+running benchmark
+Background level benchmark ---------------------------------
+Background =   50000:  61440 ->  43808    True
+Background =  100000:  61440 ->  43809    True
+Background =  150000:  61440 ->  43809    True
+Background =  200000:  61440 ->  43809    True
+Background =  250000:  61440 ->  43809    True
+Background =  300000:  61440 ->  43809    True
+Background =  350000:  61440 ->  43809    True
+Background =  400000:  61440 ->  43809    True
+Background =  450000:  61440 ->  43809    True
+Background =  500000:  61440 ->  43809    True
+Background =  550000:  61440 ->  43809    True
+Background =  600000:  61440 ->  43809    True
+Background =  650000:  61440 ->  43809    True
+Background =  700000:  61440 ->  43809    True
+Background =  750000:  61440 ->  43809    True
+Background =  800000:  61440 ->  43809    True
+Background =  850000:  61440 ->  43809    True
+Background =  900000:  61440 ->  43809    True
+Background =  950000:  61440 ->  43809    True
+------------------------------------------------------------
+
+Amplitude benchmark ----------------------------------------
+Amplitude =   10384:  61440 ->  42163    True
+Amplitude =   26768:  61440 ->  43233    True
+Amplitude =   59536:  61440 ->  43924    True
+Amplitude =  125072:  61440 ->  45253    True
+Amplitude =  256144:  61440 ->  47197    True
+Amplitude =  518288:  61440 ->  49453    True
+Amplitude = 1042576:  61440 ->  52375    True
+------------------------------------------------------------
+
+Bits per pixel benchmark -----------------------------------
+Bits = 12:  61440 ->  27434    True
+Bits = 14:  61440 ->  33653    True
+Bits = 16:  61440 ->  39811    True
+Bits = 18:  61440 ->  45961    True
+Bits = 20:  61440 ->  52108    True
+------------------------------------------------------------
+
+Context (subexponential k) benchmark -----------------------------------
+Context (m= 0 e=20 k=10) :  61440 ->  52138    True
+Context (m= 0 e=20 k=11) :  61440 ->  52138    True
+Context (m= 0 e=20 k=12) :  61440 ->  52138    True
+Context (m= 0 e=20 k=13) :  61440 ->  52138    True
+Context (m= 0 e=20 k=14) :  61440 ->  52138    True
+Context (m= 1 e=19 k=10) :  61440 ->  52138    True
+Context (m= 1 e=19 k=11) :  61440 ->  52138    True
+Context (m= 1 e=19 k=12) :  61440 ->  52138    True
+Context (m= 1 e=19 k=13) :  61440 ->  52138    True
+Context (m= 1 e=19 k=14) :  61440 ->  52138    True
+Context (m= 2 e=18 k=10) :  61440 ->  52138    True
+Context (m= 2 e=18 k=11) :  61440 ->  52138    True
+Context (m= 2 e=18 k=12) :  61440 ->  52138    True
+Context (m= 2 e=18 k=13) :  61440 ->  52138    True
+Context (m= 2 e=18 k=14) :  61440 ->  52138    True
+Context (m= 3 e=17 k=10) :  61440 ->  52138    True
+Context (m= 3 e=17 k=11) :  61440 ->  52138    True
+Context (m= 3 e=17 k=12) :  61440 ->  52138    True
+Context (m= 3 e=17 k=13) :  61440 ->  52138    True
+Context (m= 3 e=17 k=14) :  61440 ->  52138    True
+------------------------------------------------------------
+
+Compare with other format  --------------------------------
+png: 49152 -> 45833
+jpeg2000: 49152 -> 44650
+tiff lzma: 49152 -> 46474
+felics: 49152 -> 43876
+Context (subexponential k) benchmark -----------------------------------
+felics: 61440 -> 52409
+0
+1
+2
+3
+4
+True I
+8191 24576 51827 16.870768229166668
+1023 24576 37220 12.115885416666666
+benchmark finished
