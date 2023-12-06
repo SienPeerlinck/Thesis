@@ -40,8 +40,8 @@ entity FELICS is
         DEFAULT_DELTA_MIN :  std_logic_vector(20-1 downto 0) := std_logic_vector(to_unsigned(255, 20))
     );
     port(
-        I : in std_logic_vector(BITS_PER_PIXEL-1 downto 0);
-        O : out std_logic_vector(BITS_PER_PIXEL-1 downto 0);
+        FELICS_in : in std_logic_vector(BITS_PER_PIXEL-1 downto 0);
+        FELICS_out : out std_logic_vector(BITS_PER_PIXEL-1 downto 0);
         clk : in std_logic
     );
 end felics;
@@ -65,8 +65,8 @@ architecture Behavioral of FELICS is
     signal SEC_in : std_logic_vector(BITS_PER_PIXEL-1 downto 0) := (others=>'0');
     signal SEC_out : std_logic_vector(BITS_PER_PIXEL-1 downto 0) := (others=>'0');
     
-    signal felics_in : std_logic_vector(BITS_PER_PIXEL-1 downto 0) := (others=>'0');
-    signal felics_out : std_logic_vector(BITS_PER_PIXEL-1 downto 0) := (others=>'0');
+    signal FELICS_in_i : std_logic_vector(BITS_PER_PIXEL-1 downto 0) := (others=>'0');
+    signal FELICS_out_i : std_logic_vector(BITS_PER_PIXEL-1 downto 0) := (others=>'0');
     signal e : std_logic_vector(BITS_PER_PIXEL-1 downto 0) := (others=>'0');
     
     
@@ -96,7 +96,7 @@ architecture Behavioral of FELICS is
     
     -- dan effectieve implementatie 
     begin
-        felics_in <= I;
+        FELICS_in_i <= FELICS_in;
         
         ab_code: ABC 
         generic map(
@@ -124,13 +124,13 @@ architecture Behavioral of FELICS is
         begin
             if rising_edge(clk) then
             -- Beginnen met selectie van de buren, dit gaat ervan uit dat geen enkel pixel als waarde allemaal nullen heeft
-                p <= felics_in;
+                p <= FELICS_in_i;
                 if buffer_pixels = buffer_zeros then  -- eerste pixel
-                    felics_out <= p;
+                    FELICS_out_i <= p;
                     buffer_pixels(0) <= p;
                 elsif buffer_pixels(IMG_WIDTH-1) = zero_vector then -- Pixel in eerste rij (im[0,x])
                     if buffer_pixels(1) = zero_vector then -- im[0,1] 
-                        felics_out <= p;
+                        FELICS_out_i <= p;
                         buffer_pixels <= buffer_pixels(IMG_WIDTH-2 downto 0) & p; -- huidige pixel wordt achteraan toegevoegd aan buffer 
                     else 
                         b1 <= buffer_pixels(1);
@@ -166,23 +166,23 @@ architecture Behavioral of FELICS is
                 if l <= p and p <= h then  -- in range
                     ABC_in <= std_logic_vector(unsigned(p) - unsigned(l)); 
                     ABC_delta <= delta;
-                    felics_out(BITS_PER_PIXEL-1) <= '0'; -- prefix 0 hier ook al direct ABC_out aan toevoegen?
-                    felics_out(BITS_PER_PIXEL-2 downto 0) <= ABC_out;
+                    FELICS_out_i(BITS_PER_PIXEL-1) <= '0'; -- prefix 0 hier ook al direct ABC_out aan toevoegen?
+                    FELICS_out_i(BITS_PER_PIXEL-2 downto 0) <= ABC_out; --PROBLEEM MET PREFICES EN LENGTES
                     buffer_pixels <= buffer_pixels(IMG_WIDTH-2 downto 0) & p; -- huidige pixel wordt achteraan toegevoegd aan buffer
                 else  -- out of range
-                    felics_out(BITS_PER_PIXEL-1) <= '1'; -- prefix 1
+                    FELICS_out_i(BITS_PER_PIXEL-1) <= '1'; -- prefix 1
                     if p < l then -- below range 
-                        felics_out(BITS_PER_PIXEL-2) <= '0'; -- prefix 0
+                        FELICS_out_i(BITS_PER_PIXEL-2) <= '0'; -- prefix 0
                         e <= std_logic_vector(unsigned(l) - unsigned(p)-1); 
                     elsif p > h then -- above range 
-                        felics_out(BITS_PER_PIXEL-2) <= '1'; -- prefix 1 
+                        FELICS_out_i(BITS_PER_PIXEL-2) <= '1'; -- prefix 1 
                         e <= std_logic_vector(unsigned(p) - unsigned(h)-1);
                     end if;
                     SEC_in <= e;
-                    felics_out(BITS_PER_PIXEL-3 downto 0) <= SEC_out;   
+                    FELICS_out_i(BITS_PER_PIXEL-3 downto 0) <= SEC_out;   
                     buffer_pixels <= buffer_pixels(IMG_WIDTH-2 downto 0) & p; -- huidige pixel wordt achteraan toegevoegd aan buffer
                 end if;
-            -- nog ergens felics_out <= ABC_out en felics_out <= SEC_out, maar hoe zit dat met timing?        
+            -- nog ergens FELICS_out_i <= ABC_out en FELICS_out_i <= SEC_out, maar hoe zit dat met timing?        
             end if;
         end process;
     

@@ -51,14 +51,14 @@ architecture Behavioral of ABC is
      signal b : std_logic_vector(BITS_PER_PIXEL-1 downto 0) := (others=>'0');
      signal half_b : std_logic_vector(BITS_PER_PIXEL-2 downto 0) := (others=>'0');     
      signal help : std_logic_vector(BITS_PER_PIXEL-1 downto 0) := (others=>'0');
-     
     
 begin
     process (clk) is
 
     begin
         if rising_edge(clk) then 
-            a <= std_logic_vector(unsigned('1' & a(a'right-1 downto 0)) - unsigned(ABC_delta) - 1);
+            help <= std_logic_vector(unsigned('1' & a(a'right-1 downto 0)) - unsigned(ABC_delta) - 1);
+            a <= help(help'right-1 downto 0); -- ervan uitgaande dat de MSB van bovenstaande subtraction een 0 is
             b <= std_logic_vector(unsigned('1' & b(b'right-1 downto 0)) - unsigned(a(n-2 downto 0) & '0'));
             
             half_b <= b(BITS_PER_PIXEL-1 downto 1);

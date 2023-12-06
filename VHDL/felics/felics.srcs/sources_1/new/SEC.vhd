@@ -46,7 +46,7 @@ architecture Behavioral of SEC is
     -- eerst signals 
     signal k : natural := 12;
     signal b : natural := BITS_PER_PIXEL-1;
-    signal u : natural;
+    signal u : natural := 0;
 
 begin
     process (clk) is
@@ -59,7 +59,8 @@ begin
                 u <= b - k + 1;
             end if;
             
-        SEC_out <= (BITS_PER_PIXEL-1 downto BITS_PER_PIXEL-u-1 => '1') & '0' & SEC_in(b-1 downto 0);        
+            SEC_out(BITS_PER_PIXEL-1 downto BITS_PER_PIXEL-u) <= (others => '1');
+            SEC_out(BITS_PER_PIXEL-u-1 downto 0) <= '0' & SEC_in(b-1 downto 0);  
         
         end if;
     end process;
