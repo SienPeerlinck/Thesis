@@ -4,7 +4,6 @@ from algorithm.bit_stream import BitStream
 from algorithm.adjusted_bin_code import AdjustedBinCode
 from algorithm.subexponential_code import SubexponentialCode
 from algorithm.golomb_rice_code import RiceCode
-import algorithm.LeGall53dwt as lg
 
 
 class Felics(object):
@@ -51,25 +50,23 @@ class Felics(object):
         bits_per_pixel = max(p0_len, p1_len)
         bs.push_bits(bits_per_pixel, self.BITS_PER_PIXEL_BITS)
 
-        dt = np.dtype('i8')
-        coeff = lg.dwt(im).astype(dt)
 
         for y in range(height):
             for x in range(width):
                 if y == 0:
                     if x < 2:
-                        bs.push_bits(coeff[y, x], bits_per_pixel)
+                        bs.push_bits(im[y, x], bits_per_pixel)
                         continue
                     else:
-                        l = coeff[y, x - 2]
-                        h = coeff[y, x - 1]
+                        l = im[y, x - 2]
+                        h = im[y, x - 1]
                 else:
                     if x == 0:
-                        l = coeff[y - 1, 0]
-                        h = coeff[y - 1, 1]
+                        l = im[y - 1, 0]
+                        h = im[y - 1, 1]
                     else:
-                        l = coeff[y - 1, x]
-                        h = coeff[y, x - 1]
+                        l = im[y - 1, x]
+                        h = im[y, x - 1]
                 l = int(l)
                 h = int(h)
                 if l > h:
@@ -84,7 +81,7 @@ class Felics(object):
                     h = l + self.__delta_min
                     delta = self.__delta_min
 
-                p = int(coeff[y, x])
+                p = int(im[y, x])
                 if l <= p <= h:
                     # In range
                     bs.push_bits(0, 1)
@@ -174,5 +171,4 @@ class Felics(object):
                     # print("(x=%3d p=%d)" % (x,p))
                     im[y, x] = p
         # se_code.print_ctx_info()
-        coeff = lg.idwt(im)
-        return coeff
+        return im

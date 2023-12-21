@@ -1,0 +1,30 @@
+#-----------------------------------------------------------
+# Vivado v2021.1 (64-bit)
+# SW Build 3247384 on Thu Jun 10 19:36:33 MDT 2021
+# IP Build 3246043 on Fri Jun 11 00:30:35 MDT 2021
+# Start of session at: Tue Dec 12 08:16:27 2023
+# Process ID: 22416
+# Current directory: C:/Users/sienp/Documents/school/IIW4/Thesis/Thesis/VHDL/felics
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent8564 C:\Users\sienp\Documents\school\IIW4\Thesis\Thesis\VHDL\felics\felics.xpr
+# Log file: C:/Users/sienp/Documents/school/IIW4/Thesis/Thesis/VHDL/felics/vivado.log
+# Journal file: C:/Users/sienp/Documents/school/IIW4/Thesis/Thesis/VHDL/felics\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/sienp/Documents/school/IIW4/Thesis/Thesis/VHDL/felics/felics.xpr
+WARNING: [filemgmt 56-3] Default IP Output Path : Could not find the directory 'C:/Users/sienp/Documents/school/IIW4/Thesis/Thesis/VHDL/felics/felics.gen/sources_1'.
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2021.1/data/ip'.
+open_project: Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 1135.781 ; gain = 0.000
+update_compile_order -fileset sources_1
+reset_run synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory C:/Users/sienp/Documents/school/IIW4/Thesis/Thesis/VHDL/felics/felics.runs/synth_1
+
+launch_runs synth_1 -jobs 8
+[Tue Dec 12 08:36:33 2023] Launched synth_1...
+Run output will be captured here: C:/Users/sienp/Documents/school/IIW4/Thesis/Thesis/VHDL/felics/felics.runs/synth_1/runme.log
+exit
+INFO: [Common 17-206] Exiting Vivado at Tue Dec 12 11:19:23 2023...

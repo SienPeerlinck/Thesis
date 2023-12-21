@@ -63,7 +63,7 @@ class SubexponentialCode(object):
         # print("push: ",len(SubexponentialCode.__k_list))
 
     def pop(self):
-        # k = self.__context.estimate_k()
+        # k = self.__context.estimate_k(1)
         # print("pop: ", len(SubexponentialCode.__k_list))
         k = SubexponentialCode.__k_list.popleft()
         # except IndexError: k=12

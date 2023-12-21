@@ -1,16 +1,16 @@
-import pywt as wt # PyWavelets library
+
 import numpy as np
-from algorithm.bit_stream import BitStream
-from algorithm.subexponential_code import SubexponentialCode
-import algorithm.LeGall53dwt as lg
-from algorithm.adjusted_bin_code import AdjustedBinCode
+from FELICS_vs_IWTSEC.algorithm.bit_stream import BitStream
+from FELICS_vs_IWTSEC.algorithm.subexponential_code import SubexponentialCode
+import FELICS_vs_IWTSEC.algorithm.LeGall53dwt as lg
+from FELICS_vs_IWTSEC.algorithm.adjusted_bin_code import AdjustedBinCode
 
 
-class Fapec(object):
+class Iwtsec(object):
     VERSION = 0x01
     
     # Header Structure
-    FAPEC_VERSION_BITS = 8
+    IWTSEC_VERSION_BITS = 8
     IMG_WIDTH_BITS = 12
     IMG_HEIGHT_BITS = 12
     BITS_PER_PIXEL_BITS = 5
@@ -31,8 +31,8 @@ class Fapec(object):
         se_code = SubexponentialCode(bs)
         ab_code = AdjustedBinCode(bs)
 
-        # FAPEC Header
-        bs.push_bits(self.VERSION, self.FAPEC_VERSION_BITS)
+        # IWTSEC Header
+        bs.push_bits(self.VERSION, self.IWTSEC_VERSION_BITS)
 
         height, width = im.shape
         # print("im = ",im.shape)
@@ -65,7 +65,7 @@ class Fapec(object):
 
         m = 7
 
-        version = bs.pop_bits(self.FAPEC_VERSION_BITS)
+        version = bs.pop_bits(self.IWTSEC_VERSION_BITS)
 
         width = bs.pop_bits(self.IMG_WIDTH_BITS) 
         height = bs.pop_bits(self.IMG_HEIGHT_BITS)
